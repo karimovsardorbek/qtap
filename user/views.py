@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import CustomUser
 from .serializers import UserSerializer
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 class UserRegistrationView(APIView):
     def post(self, request):
@@ -29,3 +29,9 @@ class UserLoginView(APIView):
                 return Response({"error": "Account is disabled"}, status=status.HTTP_403_FORBIDDEN)
         else:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+
+class UserLogoutView(APIView):
+    def post(slef, request):
+        logout(request)
+        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
